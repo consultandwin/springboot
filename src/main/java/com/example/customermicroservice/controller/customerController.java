@@ -1,6 +1,8 @@
 package com.example.customermicroservice.controller;
 
+import com.example.customermicroservice.dto.customerDto;
 import com.example.customermicroservice.entity.customer;
+import com.example.customermicroservice.exception.CustomerNotFoundException;
 import com.example.customermicroservice.services.customerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +41,9 @@ public class customerController {
         return service.updateCustomerByFields(id,fields);
     }
 
-
-
+    @GetMapping("/customer/name/{id}")
+    public customerDto getNameById(@PathVariable("id") int id) throws Exception {
+        return service.getCustomerNameById(id);
+    }
 
 }

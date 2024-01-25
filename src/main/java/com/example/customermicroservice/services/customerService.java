@@ -1,6 +1,8 @@
 package com.example.customermicroservice.services;
 
+import com.example.customermicroservice.dto.customerDto;
 import com.example.customermicroservice.entity.customer;
+import com.example.customermicroservice.exception.CustomerNotFoundException;
 import com.example.customermicroservice.repository.customerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,4 +47,14 @@ public customer saveCustomer(customer customer)
         return null;
     }
 
+    public customerDto getCustomerNameById(int id) throws Exception {
+        customer customer = null;
+        customer=repository.findById(id).orElseThrow(() -> new CustomerNotFoundException("there is no customer with this id "+id));
+        customerDto customerDto=null;
+        if (customer != null) {
+            customerDto = new customerDto();
+            customerDto.setCustomerName(customer.getCustomerName());
+        }
+        return customerDto;
+    }
 }
